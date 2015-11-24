@@ -1,0 +1,33 @@
+﻿@using BeyondThemes.BeyondAdmin.Models.Directorio
+@model ParcialNuevoInformanteViewModel
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Nombre informante</label>
+            <input type="hidden" name="RolEstablecimiento" value="@Model.RolEstablecimiento.ToString()"/>
+            <input type="text" class="form-control requerid" name="NombreInformante" >
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Telefono informante </label>
+            <input type="text" class="form-control requerid" name="FonoInformante" >
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Correo informante</label>
+            <input type="text" class="form-control requerid" name="CorreoInformante" >
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Cargo informante</label>
+            <input type="text" class="form-control requerid" name="CargoInformante" >
+        </div>
+    </div>
+</div>

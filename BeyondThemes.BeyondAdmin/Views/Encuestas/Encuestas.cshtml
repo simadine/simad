@@ -1,0 +1,207 @@
+﻿
+@{
+    ViewBag.Title = "Encuestas";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+
+
+<div class="row">
+
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header ">
+                <span class="widget-caption">Listado de encuestas </span>
+                <div class="widget-buttons">
+                    <a href="#" data-toggle="maximize">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="#" data-toggle="collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="#" data-toggle="dispose">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+
+            </div>
+            <div class="widget-body">
+                <div class="table-toolbar">
+                    <a data-toggle="modal" data-target="#ModalNuevaEncuesta" class="btn btn-default">
+                        Nueva encuesta
+                    </a>
+                </div>
+                <table class="table table-striped table-bordered table-hover" id="ListaDeEncuestas">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre Encuesta</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                            <th>Tipo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal nueva encuesta-->
+@using (var modal = Html.Bootstrap().Begin(new Modal().Id("ModalNuevaEncuesta").Closeable().Size(BootstrapSizes.Large)))
+{
+    using (var header = modal.BeginHeader())
+    {
+        <h4 class="modal-title" id="myLargeModalLabel">Nueva encuesta</h4>
+    }
+    using (var body = modal.BeginBody())
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="widget-body col-md-12">
+                    @Html.Action("ParcialNuevaEncuesta", "Encuestas")
+                    <input type="hidden" id="IdEncuesta">
+                    <div id="muestra">
+                      
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+}
+
+<!--Fin Modal nueva encuesta-->
+
+@section PageScripts{
+
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/toastr/toastr.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script src="~/assets/js/datetime/moment.js"></script>
+    <script src="~/assets/js/datetime/daterangepicker.js"></script>
+    <script src="~/assets/js/jqueryval/jquery.validate.js"></script>
+
+    <script>
+        InitiateListaDeEncuestas.init();
+     
+
+        $(function () {
+            $('#inputPeriodo').on('apply.daterangepicker', function (ev, picker) {
+                $("input[name='FechaInicio']").val(picker.startDate.format('DD/MM/YYYY'));
+                $("input[name='FechaTermino']").val(picker.endDate.format('DD/MM/YYYY'));
+            });
+            $('#inputPeriodo').daterangepicker({
+                format: 'DD-MM-YYYY',
+                locale: {
+                    separator: ' - ',
+                    applyLabel: 'Guardar',
+                    cancelLabel: 'Cancelar',
+                    fromLabel: 'Desde',
+                    toLabel: 'Hasta',
+                    customRangeLabel: 'Custom',
+                    daysOfWeek: ['Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vie', 'Sab'],
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    firstDay: 1
+                },
+            });
+        });
+      
+        function muestra() {    
+            var muestra = [];
+            var table = $('#MuestraAnterior').DataTable();
+            var rows = table.rows('.active').data();
+            for (indice in rows) {
+                if (typeof rows[indice][1] != "undefined") {
+                    muestra.push(rows[indice][0]);
+                }
+            }
+            var Id = $("#IdEncuesta").val();
+            console.log(Id);
+            if (Id == '') {
+                Notify('Debe almacenar la encuesta antes', 'bottom-right', '5000', 'warning', 'fa-check', true);
+            } else {
+                var postData = { values: muestra, IdEncuesta: Id };
+                $.ajax({
+                    type: 'POST',
+                    url: '/Encuestas/GuardarMuestraAnterior/',
+                    data: postData,
+                    success: function (data) {
+                        if (data == 1) {
+                            Notify('Muestra guardada con exito.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                        } if (data == 2) {
+                            Notify('La Encuesta ya tiene una muestra asociada', 'bottom-right', '5000', 'warning', 'fa-check', true);
+                        } if (data == 3) {
+                            Notify('No se puede guardar una mustra sin establecimientos', 'bottom-right', '5000', 'warning', 'fa-check', true);
+                        }
+                        else {
+                            Notify('Ha ocurrido un error por favor contacte a su administrador', 'bottom-right', '5000', 'warning', 'fa-check', true);
+                        }
+
+                        muestra = [];
+
+                    }
+                });
+
+            }
+          
+        }
+        $(document).ready(function () {
+         
+  
+          
+           
+            $(".select-TipoEncuesta").change(function () {
+                var IdTipoEncuesta = $(".select-TipoEncuesta option:selected").val();
+                bootbox.confirm("Desea cargar muestra de la ultima encuesta "+$(".select-TipoEncuesta option:selected").text(), function (result) {
+                    if (result) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Widget/ParcialObtenerMuestra?IdTipoEncuesta=' + IdTipoEncuesta,
+                            DataType: 'json',
+                            success: function (data) {
+                                $("#muestra").html(data);
+                                InitiateMuestraAnterior.init();
+                            }
+                        });
+                    } else {
+                        return;
+                    }
+                    });
+                
+            });
+    
+            $("#NuevaEncuesta").validate({
+                errorPlacement: function () { return false; },
+                highlight: function (element) {
+                    $(element).closest('.form-group').addClass('has-error');
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-error');
+                },
+                submitHandler: function (form) {
+                    var formulario = $('#NuevaEncuesta').serialize();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Encuestas/NuevaEncuesta/',
+                        data: formulario,
+                        DataType: 'json',
+                        success: function (data) {
+                            if (data > 1) {
+                                Notify('Encuesta creada con exito.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                                $("#IdEncuesta").val(data);
+                            } else {
+                                Notify('Ha ocurrido un error por favor contacte a su administrador', 'bottom-right', '5000', 'warning', 'fa-check', true);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

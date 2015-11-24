@@ -1,0 +1,12 @@
+﻿@using BeyondThemes.BeyondAdmin.Models.Widget
+@model ParcialComunasViewModel
+@{
+    Layout = null;
+}
+
+<select class="form-control required" name="CodComuna" required>
+    @foreach (Glo_Comunas comuna in Model.comunas)
+    {
+        <option value="@comuna.CodComuna">@comuna.NombreComuna.ToString()</option>
+    }
+</select>

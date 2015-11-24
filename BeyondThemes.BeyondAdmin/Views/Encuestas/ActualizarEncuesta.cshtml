@@ -1,0 +1,305 @@
+﻿@using BeyondThemes.BeyondAdmin.Models.Encuestas
+@model ActualizarEncuestaViewModel
+@{
+    ViewBag.Title = "ActualizarEncuesta";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget  radius-bordered">
+                    <div class="widget-header ">
+                        <span class="widget-caption">Formulario de actualización de encuesta </span>
+                        <div class="widget-buttons">
+                            <a href="#" data-toggle="maximize">
+                                <i class="fa fa-expand"></i>
+                            </a>
+                            <a href="#" data-toggle="collapse">
+                                <i class="fa fa-minus"></i>
+                            </a>
+                            <a href="#" data-toggle="dispose">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="docs-example">
+                            <form id="Formulario-Actulizar-Encuesta" method="post" class="form-horizontal" data-toggle="validator" role="form" novalidate="novalidate">
+                                <div class="tab-pane active" id="info-tab">
+                                    <div class="form-group has-feedback ">
+                                        <label class="col-lg-4 control-label">Nombre encuesta</label>
+                                        <div class="col-lg-8">
+                                            <input type="hidden" name="IdEncuesta" class="requerid" value="@Model.Encuesta.IdEncuesta">
+                                            <input type="text" class="form-control requerid" name="NombreEncuesta" value="@Model.Encuesta.NombreEncuesta.ToString()" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label class="col-lg-4 control-label">Estado</label>
+                                        <div class="col-lg-8">
+                                            <select class="form-control requerid" name="IdEstadoEncuesta">
+                                                @foreach(Glo_EstadoEncuesta estado in Model.EstadosEncuestas)
+                                                {
+                                                    <option value="@estado.IdEstadoEncuesta" @if (estado.IdEstadoEncuesta == Model.Encuesta.IdEstadoEncuesta) { Write("selected"); }>@estado.GlosaEncuestaEstado</option>
+                                                }
+                                            </select>                                             
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label class="col-lg-4 control-label">Tipo de encuesta</label>
+                                        <div class="col-lg-8">
+                                            <select class="form-control requerid" name="IdTipoEncuesta">
+                                                @foreach (Glo_TipoEncuesta tipoencuesta in Model.TiposEncuentas)
+                                                {
+                                                    <option value="@tipoencuesta.IdTipoEncuesta" @if (tipoencuesta.IdTipoEncuesta == Model.Encuesta.IdTipoEncuesta) { Write("selected"); }>@tipoencuesta.GlosaTipoEncuesta (@tipoencuesta.Periodicidad)</option>
+                                                }
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label class="col-lg-4 control-label">Fecha inicio -  termino</label>
+                                        <div class="col-lg-8">
+                                         <input type="text" class="form-control requerid" id="inputPeriodo" value= "@Convert.ToDateTime(Model.Encuesta.FechaInicio).ToString("dd/MM/yyyy") - @Convert.ToDateTime(Model.Encuesta.FechaTermino).ToString("dd/MM/yyyy")" />
+                                         <input type="hidden" name="FechaInicio" class="requerid" value="@Convert.ToDateTime(Model.Encuesta.FechaInicio).ToString("dd/MM/yyyy")">
+                                         <input type="hidden" name="FechaTermino" class="requerid" value="@Convert.ToDateTime(Model.Encuesta.FechaTermino).ToString("dd/MM/yyyy")">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-8 col-lg-offset-4">
+                                        <button type="submit" class="btn btn-blue">Actualizar</button>
+                                        <a data-toggle="modal" data-target="#ModalActividadesEncuesta" class="btn btn-default">
+                                            Actividades economicas
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget  radius-bordered">
+                    <div class="widget-header ">
+                        <span class="widget-caption">Actividades económicas  asociadas  </span>
+                        <div class="widget-buttons">
+                            <a href="#" data-toggle="maximize">
+                                <i class="fa fa-expand"></i>
+                            </a>
+                            <a href="#" data-toggle="collapse">
+                                <i class="fa fa-minus"></i>
+                            </a>
+                            <a href="#" data-toggle="dispose">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="form-title">
+                            Actividad económica
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label> Sección</label>
+                                    <select class="form-control" onclick="SelectDivision(this);" data-id="1">
+                                      @foreach (Glo_Seccion seccion in Model.secciones) {
+                                          <option value="@seccion.IdSeccion">@seccion.GlosaSeccion.ToString()</option>
+                                      } 
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label> División</label>
+                                    <div id="divisiones-1">
+                                        <select class="form-control" onclick="SelectGrupo(this);" data-id="1">
+                                            @foreach (Glo_Division division in Model.divisiones)
+                                            {
+                                                <option value="@division.IdDivision.ToString()" >@division.GlosaDivision.ToString()</option>
+                                            }                                           
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label> Grupo</label>
+                                    <div id="grupos-1">
+                                            
+                                        <select class="form-control" onclick="SelectClase(this);" data-id="1">
+                                            @foreach (Glo_Grupo grupo in Model.grupos)
+                                            {
+                                                <option value="@grupo.IdGrupo.ToString()">@grupo.GlosaGrupo.ToString()</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label> Clase</label>
+                                    <div id="clases-1" class="input-group" >
+                                        <select class="form-control" name="IdActividad" onclick="SelectSubclase(this);" data-id="1">
+                                            @foreach (Glo_Clase clase in Model.clases)
+                                            {
+                                                <option value="@clase.IdActividad.ToString()" >@clase.GlosaClase.ToString()</option>
+                                            }
+                                        </select>
+                                        <span class="input-group-addon"><i class="fa fa-times"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget  radius-bordered">
+                    <div class="widget-header ">
+                        <span class="widget-caption">Muestra de encuesta <strong>@Model.Encuesta.NombreEncuesta (@Model.Encuesta.Glo_TipoEncuesta.Periodicidad) desde @Convert.ToDateTime(Model.Encuesta.FechaInicio).ToString("dddd dd MMMM yyyy") al @Convert.ToDateTime(Model.Encuesta.FechaTermino).ToString("dddd dd  MMMM yyyy")</strong> </span>
+                        <div class="widget-buttons">
+                            <a href="#" data-toggle="maximize">
+                                <i class="fa fa-expand"></i>
+                            </a>
+                            <a href="#" data-toggle="collapse">
+                                <i class="fa fa-minus"></i>
+                            </a>
+                            <a href="#" data-toggle="dispose">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="table-toolbar">
+                            <a  class="btn btn-default">
+                               <i class="fa fa-plus"></i> Establecimiento
+                            </a>
+                        </div>
+                        <table class="table table-striped table-bordered table-hover" id="Muestra" data-IdEncuesta="@Model.Encuesta.IdEncuesta">
+                            <thead>
+                                <tr>
+                                    <th>Establecimiento</th>
+                                    <th>Fecha recepción</th>
+                                    <th>Estado</th>
+                                    <th>Observacion</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal Actividades economicas de la encuesta-->
+@using (var modal = Html.Bootstrap().Begin(new Modal().Id("ModalActividadesEncuesta").Closeable().Size(BootstrapSizes.Large)))
+{
+    using (var header = modal.BeginHeader())
+    {
+        <h4 class="modal-title" id="myLargeModalLabel">Actividades Economicas asociadas </h4>
+    }
+    using (var body = modal.BeginBody())
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="widget-body">
+                   
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<!--Fin Modal Actividades economicas de la encuesta-->
+
+@section PageScripts{
+ 
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/datetime/moment.js"></script>
+    <script src="~/assets/js/datetime/daterangepicker.js"></script>
+    <script src="~/assets/js/toastr/toastr.js"></script>
+    <script src="~/assets/js/jqueryval/jquery.validate.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script src="~/assets/js/actividad/ActividadEconomica.js"></script>
+    
+    <script>
+        InitiateMuestra.init();
+        InitiateSimpleDataTable.init();
+        $(function () {
+            $('#inputPeriodo').on('apply.daterangepicker', function (ev, picker) {
+                console.log(picker.startDate.format('DD/MM/yyyy'));
+                $("input[name='FechaInicio']").val(picker.startDate.format('DD/MM/YYYY'));
+                $("input[name='FechaTermino']").val(picker.endDate.format('DD/MM/YYYY'));
+            });
+
+            $('#inputPeriodo').daterangepicker({
+                format: 'DD-MM-YYYY',
+                startDate: '@Convert.ToDateTime(Model.Encuesta.FechaInicio).ToString("dd/MM/yyyy")',
+                endDate: '@Convert.ToDateTime(Model.Encuesta.FechaTermino).ToString("dd/MM/yyyy")',
+                locale: {
+                    separator: ' - ',
+                    applyLabel: 'Guardar',
+                    cancelLabel: 'Cancelar',
+                    fromLabel: 'Desde',
+                    toLabel: 'Hasta',
+                    customRangeLabel: 'Custom',
+                    daysOfWeek: ['Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vie','Sab'],
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    firstDay: 1
+                },
+            });
+        });
+
+    
+        $("#Formulario-Actulizar-Encuesta").validate({
+            errorPlacement: function () { return false; },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+            },
+            submitHandler: function (form) {
+                var formulario = $('#Formulario-Actulizar-Encuesta').serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '/Encuestas/ActualizarDatosEncuesta/',
+                    data: formulario,
+                    DataType: 'json',
+                    success: function (data) {
+                        if (data == 1) {
+                            Notify('Encuesta actualizada con exito.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                        } else {
+                            Notify('Ha ocurrido un error, por favor contacte con su administrador', 'bottom-right', '5000', 'danger', 'fa-check', true);
+                        }
+                    }
+                });
+            }
+        });
+        
+    </script>
+}

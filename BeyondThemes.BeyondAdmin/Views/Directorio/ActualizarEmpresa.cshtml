@@ -1,0 +1,417 @@
+﻿@using BeyondThemes.BeyondAdmin.Models.Directorio
+@model ActualizarEmpresaViewModel
+@{
+    ViewBag.Title = "Actualizar empresa";
+    ViewBag.Description = "Actualizar empresa";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget  radius-bordered">
+                    <div class="widget-header ">
+                        <span class="widget-caption">Formulario de actualización de empresa @Model.empresa.RazonSocial.ToString()</span>
+                        <div class="widget-buttons">
+                            <a href="#" data-toggle="maximize">
+                                <i class="fa fa-expand"></i>
+                            </a>
+                            <a href="#" data-toggle="collapse">
+                                <i class="fa fa-minus"></i>
+                            </a>
+                            <a href="#" data-toggle="dispose">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="widget-body">
+                        <div class="docs-example">
+                            
+                            <form id="accountForm" method="post" class="form-horizontal" data-toggle="validator" role="form" novalidate="novalidate">
+                           
+                                    <div class="tab-pane active" id="info-tab">
+                                        <div class="form-group has-feedback ">
+                                            <label class="col-lg-4 control-label">Rut</label>
+                                            <div class="col-lg-8">
+                                                <input type="text" class="form-control requerid"   value="@Model.empresa.RutEmpresa.ToString()-@Model.empresa.DvEmpresa.ToString()" readonly  required>
+                                                <input type="hidden" class="form-control requerid" name="RutEmpresa" value="@Model.empresa.RutEmpresa.ToString()" required>
+                                                <input type="hidden" class="form-control requerid" name="DvEmpresa" value="@Model.empresa.DvEmpresa.ToString()" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-lg-4 control-label">Razon social</label>
+                                            <div class="col-lg-8">
+                                               
+                                                <input type="text" class="form-control requerid" name="RazonSocial" value="@Model.empresa.RazonSocial.ToString()" data-bv-field="RazonSocial" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-lg-4 control-label">Representante legal</label>
+                                            <div class="col-lg-8">
+                                                <input type="text" class="form-control requerid" name="RepresentanteLegal" value="@Model.empresa.RepresentanteLegal.ToString()" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-lg-4 control-label">Estado</label>
+                                            <div class="col-lg-8">
+                                                <select class="form-control requerid" name="IdEstado" required>
+                                                    @foreach (Glo_Estados estado in Model.Estados)
+                                                    {
+                                                        <option value="@estado.IdEstado" @if (Model.empresa.IdEstado == estado.IdEstado) { Write("selected"); }>@estado.GlosaEstado.ToString()</option>
+                                                    }
+                                                </select><i class="form-control-feedback" data-bv-field="country" style="display: none;"></i>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-lg-4 control-label">Provincia</label>
+                                            <div class="col-lg-8">
+                                                <select class="form-control select-provincia" data-id="@Model.empresa.RutEmpresa" name="ProvinciaID" data-bv-field="ProvinciaID">
+                                                    @foreach (Glo_Provincias provincia in Model.Provincias)
+                                                    {
+                                                        <option value="@provincia.CodProvincia" @if (Model.empresa.Glo_Comunas.CodProvincia == provincia.CodProvincia) { Write("selected"); }>@provincia.NombreProvincia.ToString()</option>
+                                                    }
+                                                </select><i class="form-control-feedback" data-bv-field="country" style="display: none;"></i>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-lg-4 control-label">Comuna</label>
+                                            <div class="col-lg-8">
+                                                <div id="comunas-@Model.empresa.RutEmpresa">
+                                                    @* Aqui se cargan las comunas segun el select provincia *@
+                                                    <select class="form-control required" name="CodComuna" required>
+                                                        @foreach (var  comuna in Model.Comunas)
+                                                        {
+                                                            <option value="@comuna.CodComuna"  @if (Model.empresa.CodComuna == comuna.CodComuna) { Write("selected"); } >@comuna.NombreComuna.ToString()</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                  
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-8 col-lg-offset-4">
+                                        <button type="submit" class="btn btn-blue">Actualizar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.Action("ParcialEstablecimientosPorEmpresa", "Directorio", new { EmpresaId = Model.empresa.RutEmpresa })
+
+
+<!--Modal nueva georrefencia-->
+@using (var modal = Html.Bootstrap().Begin(new Modal().Id("ModalNuevaGeorrefencia").Closeable().Size(BootstrapSizes.Normal)))
+{
+    using (var header = modal.BeginHeader())
+    {
+        <h4 class="modal-title" id="myLargeModalLabel">Nueva Georreferencia </h4>
+    }
+    using (var body = modal.BeginBody())
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="widget-body">
+                  <div id="contenido-modal-nuevageorreferencia"></div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<!--Fin Modal nueva georrefencia-->
+
+<!--Modal nuevo infomannte-->
+@using (var modal = Html.Bootstrap().Begin(new Modal().Id("ModalNuevoInformante").Closeable().Size(BootstrapSizes.Normal)))
+{
+    using (var header = modal.BeginHeader())
+    {
+        <h4 class="modal-title" id="myLargeModalLabel">Nuevo informante </h4>
+    }
+    using (var body = modal.BeginBody())
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="widget-body">
+                    <form id="formulario-informante" method="post" data-toggle="validator" role="form" novalidate="novalidate">
+                        <div id="contenido-modal-NuevoInformante"></div>
+                            <button type="submit" class="btn btn-blue">Almacenar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+}
+<!--Fin Modal nueva infomannte-->
+@section PageScripts{
+
+
+<link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+<script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+<script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+<script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+<script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+<script src="~/assets/js/datatable/datatables-init.js"></script>
+<script src="~/assets/js/toastr/toastr.js"></script>
+<script src="~/assets/js/jqueryval/jquery.validate.js"></script>
+<script src="~/assets/js/actividad/ActividadEconomica.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script src="~/assets/js/gomap/jquery.gomap-1.3.3.js"></script>
+<script src="~/assets/js/bootbox/bootbox.js"></script>
+
+<script>
+    InitiateEditableDataTable.init();
+    $(document).ready(function () {
+
+    $(".select-provincia").change(function () {
+    var CodProvincia = $(this).find('option:selected').val();
+    var id = $(this).data("id");
+            $.ajax({
+    type: 'POST',
+                url: '/Widget/ParcialComunas?CodProvincia=' + CodProvincia,
+                DataType: 'json',
+                success: function (data) {
+                    $("#comunas-"+id).html(data);
+        }
+    });
+        });
+        //nuevo-informante
+        $(function () {
+            $(".nuevo-informante").each(function () {
+                var id = $(this).data("id");
+                $(this).click(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Directorio/ParcialNuevoInformante?RolEstablecimiento='+id,
+                        DataType: 'json',
+                        success: function (data) {
+                            $("#contenido-modal-NuevoInformante").html(data);
+                        }
+                    });
+                });
+            });
+        });
+
+        $(function () {
+            $(".nueva-georreferencia").each(function () {
+                var id = $(this).data("id");
+                $(this).click(function () {
+                    $("#contenido-modal-nuevageorreferencia").html();
+                    $("#contenido-modal-nuevageorreferencia").html('<div id="mapa-nuevo-'+id+'" class="nuevo-mapa" style="min-height:350px; width:100%;"></div>');
+                    $("#mapa-nuevo-" + id).goMap({
+                        markers: [{
+                            latitude: "-36.879620605026766",
+                            longitude: "-72.33673095703125",
+                            id: id.toString(),
+                            draggable: true,
+                        }],
+                        maptype: 'ROADMAP',
+                        disableDoubleClickZoom: true,
+                        zoom: 9
+                    });                 
+                    $.goMap.createListener({ type: 'marker', marker: id.toString() }, 'dblclick', function (event) {
+                        var latitude = this.position.lat();
+                        var longitude =this.position.lng();                        
+                        bootbox.confirm("¿Desea guardar esta georreferencia para este establecimiento?", function (result) {
+                            if (result) {
+                                var georreferencia = { RolEstablecimiento: id, Latitud: latitude, Longitud: longitude };
+                                console.log(georreferencia);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/Directorio/NuevaGeoreferenciatosEstablecimiento/',
+                                    data: georreferencia,
+                                    DataType: 'json',
+                                    success: function (data) {
+                                        if (data == 1) {
+                                            Notify('Georreferencia agregada con exito.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                                        } else {
+                                            Notify('Ha ocurrido un error, por favor contacte con su administrador' + data, 'bottom-right', '5000', 'danger', 'fa-check', true);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    });
+                });
+            });
+        });
+        $(function () {
+            $(".mapa").each(function () {
+                var id = $(this).data("id");
+                $(this).goMap({
+                    markers: [{
+                        latitude: parseFloat($(this).data("lat")),
+                        longitude: parseFloat($(this).data("lng")),
+                        id: id.toString(),
+                        draggable: true,
+                    }],
+                   maptype: 'ROADMAP',
+                   disableDoubleClickZoom: true,
+                   zoom:9
+                });
+                $.goMap.createListener({ type: 'marker', marker: id.toString() }, 'dblclick', function (event) {
+                    var latitude = this.position.lat();
+                    var longitude = this.position.lng();
+                    bootbox.confirm("¿Desea guardar esta georreferencia para este establecimiento?", function (result) {
+                        if (result) {
+                            var georeferencia = { RolEstablecimiento: id, Latitud: latitude, Longitud: longitude };
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Directorio/ActualizarGeoreferenciatosEstablecimiento/',
+                                data: georeferencia,
+                                DataType: 'json',
+                                success: function (data) {
+                                    if (data == 1) {
+                                        Notify('Georreferencia actualizada con exito.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                                    } else {
+                                        Notify('Ha ocurrido un error, por favor contacte con su administrador' + data, 'bottom-right', '5000', 'danger', 'fa-check', true);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
+                $.goMap.createListener({ type: 'marker', marker: id.toString() }, 'drag', function (event) {
+                    console.log(this.position.lat());
+                    $("#Latitud-" + id.toString()).val(this.position.lat());
+                    $("#Longitud-" + id.toString()).val(this.position.lng());
+                });
+            });
+        });
+        $(function () {
+            $("form").each(function () {
+                $(this).validate({
+                    rules: {
+                        NombreEstablecimiento: "required",
+                        DireccionEstablecimiento: "required",
+                        CodigoArea1: {
+                            required: true,
+                            number:true
+                        },
+                        Telefono1: {
+                            required: true,
+                            number:true,
+                        },
+                        CodigoArea2: {
+                            number: true
+                        },
+                        Telefono2:{
+                            number:true
+                        },
+                        CodigoArea3: {
+                            number: true
+                        },
+                        Telefono3: {
+                            number: true
+                        },
+                        CorreoElectronico: {
+                            email: true
+                        },
+                        sitioweb: {
+                            url:true
+                        }
+                    },
+                    messages: {
+                        NombreEstablecimiento: "Debe indicar nombre del establecimiento"
+                    },
+                    errorPlacement: function () {return false;
+                    },
+                    highlight: function (element) {
+                        $(element).closest('.form-group').addClass('has-error');
+                    },
+                    unhighlight: function (element) {
+                        $(element).closest('.form-group').removeClass('has-error');
+                    },
+                    submitHandler: function (form) {
+                        var formulario = $(form).serialize();
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Directorio/ActualizarDatosEstablecimiento/',
+                            data: formulario,
+                            DataType: 'json',
+                            success: function (data) {
+                                if (data == 1) {
+                                    Notify('Establecimiento actualizado con exito.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                                } else {
+                                    Notify('Ha ocurrido un error, por favor contacte con su administrador'+data, 'bottom-right', '5000', 'danger', 'fa-check', true);
+                                }
+                            }
+                        });
+
+                    }
+                });
+            });
+        });
+
+
+        $("#formulario-informante").validate({
+            rules: {
+                NombreInformante: "required",
+                FonoInformante: "required",
+                CorreoInformante: "required",
+                CargoInformante: "required"
+            },
+            errorPlacement: function () { return false; },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+            },
+            submitHandler: function (form) {
+                var formulario = $('#formulario-informante').serialize();
+                console.log(formulario);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Directorio/NuevoInformante/',
+                    data: formulario,
+                    DataType: 'json',
+                    success: function (data) {
+                        if (data == 1) {
+                            Notify('Informante añadido con exito.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                        } else {
+                            Notify('Ha ocurrido un error, por favor contacte con su administrador', 'bottom-right', '5000', 'danger', 'fa-check', true);
+                        }
+                    }
+                });
+            }
+        });
+        $("#accountForm").validate({
+            errorPlacement: function () { return false; },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+            },
+            submitHandler: function (form) {
+                var formulario = $('#accountForm').serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '/Directorio/ActualizarDatosEmpresa/',
+                    data: formulario,
+                    DataType: 'json',
+                    success: function (data) {
+                        if (data == 1) {
+                            Notify('Empresa actualizada con exito.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                        } else {
+                            Notify('Ha ocurrido un error, por favor contacte con su administrador', 'bottom-right', '5000', 'danger', 'fa-check', true);
+                        }                    
+                    }                
+                });
+            }
+        });
+    });
+</script>
+
+}

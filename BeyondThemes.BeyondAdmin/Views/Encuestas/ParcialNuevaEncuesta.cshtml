@@ -1,0 +1,38 @@
+﻿@using BeyondThemes.BeyondAdmin.Models.Encuestas
+@model ParcialNuevaEncuestaViewModel
+@{
+    Layout = null;
+}
+
+<form id="NuevaEncuesta" method="post" data-toggle="validator" role="form" novalidate="novalidate">  
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label> Nombre de la encuesta</label>
+                <input type="text" class="form-control required" name="NombreEncuesta" style="text-transform:uppercase;" required>
+           
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label >Fecha inicio - termino</label>
+                    <input type="text" class="form-control requerid" id="inputPeriodo"  required/>
+                    <input type="hidden" name="FechaInicio" class="requerid" >
+                    <input type="hidden" name="FechaTermino" class="requerid">
+            </div>
+        </div>
+            <div class="col-md-7">
+                <div class="form-group">
+                    <label> Tipo de encuesta</label>
+                    <select class="form-control required select-TipoEncuesta" name="IdTipoEncuesta" required>
+                        <option selected></option>
+                        @foreach (Glo_TipoEncuesta tipoencuesta in Model.TipoEncuestas)
+                        {
+                            <option value="@tipoencuesta.IdTipoEncuesta">@tipoencuesta.GlosaTipoEncuesta (@tipoencuesta.Periodicidad)</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+    <button type="submit" class="btn btn-blue">Crear encuesta</button>
+</form>

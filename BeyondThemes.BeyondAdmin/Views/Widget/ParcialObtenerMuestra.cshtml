@@ -1,0 +1,43 @@
+﻿@using BeyondThemes.BeyondAdmin.Models.Widget
+@model ParcialObtenerMuestraViewModel
+@{
+    Layout = null;
+}
+
+
+
+    <div class="form-title">
+        Muestra anterior
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped table-bordered table-hover" id="MuestraAnterior">
+                <thead>
+                    <tr>
+                        
+                        <th>Rol</th>
+                        <th>Establecimiento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var muestra in Model.Muestras)
+                    {
+                        <tr class="active" id="row-@muestra.RolEstablecimiento" data-id="row-@muestra.RolEstablecimiento">
+                          
+                            <td>
+                                @muestra.RolEstablecimiento.ToString()
+                            </td>
+                            <td>
+                                @muestra.Dir_Establecimientos.NombreEstablecimiento.ToString()
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button type="button" id="GuardarMuestra" onclick="javaescript: muestra();" class="btn btn-blue">Guardar muestra</button>
+
+
+

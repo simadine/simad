@@ -1,0 +1,75 @@
+﻿@using BeyondThemes.BeyondAdmin.Models.Directorio
+@model ParcialNuevaEmpresaViewModel
+@{
+    Layout = null;
+}
+
+<form id="NuevaEmpresa" method="post" data-toggle="validator" role="form" novalidate="novalidate">
+    <div class="form-title">
+        Información de la empresa
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label> Rut</label>
+                <input type="text" id="rut" onblur="EmpresaExiste(this)" class="form-control required" name="RutEmpresa" maxlength="8" required>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                <label> </label>
+                <input type="text" id="DvEmpresa" class="form-control required" name="DvEmpresa" style="padding-left:3px;padding-right: 0px;position: relative;top: 5px;left: -22px" required>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label> Razón social</label>
+                <input type="text" class="form-control required" name="RazonSocial" style="text-transform:uppercase;" required>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label> Representante legal</label>
+                <input type="text" class="form-control required" name="RepresentanteLegal"  style="text-transform:uppercase;" required>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label> Estado</label>
+                <select class="form-control required" name="Idestado" required>
+                    @foreach (Glo_Estados estado in Model.estados)
+                    {
+                        <option value="@estado.IdEstado" >@estado.GlosaEstado.ToString()</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Provincia</label>
+                <select class="form-control select-provincia"  >
+                  @foreach (Glo_Provincias provincia in Model.provincias)
+                  {
+                    <option value="@provincia.CodProvincia">@provincia.NombreProvincia.ToString()</option>
+                  }
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label> Comuna</label>
+                <div id="comunas">
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-blue">Actualizar</button>
+</form>

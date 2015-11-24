@@ -1,0 +1,13 @@
+﻿@using BeyondThemes.BeyondAdmin.Models.Widget
+@model ParcialDivisionesViewModel
+
+@{
+    Layout = null;
+}
+
+    <select class="form-control" onclick="SelectGrupo(this);" data-id="@Model.establecimiento.ToString()">
+        @foreach (Glo_Division division in Model.divisiones)
+        {
+            <option value="@division.IdDivision">@division.GlosaDivision.ToString()</option>
+        }
+    </select>

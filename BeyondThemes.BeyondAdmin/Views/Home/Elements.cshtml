@@ -1,0 +1,721 @@
+﻿@{
+    ViewBag.Title = "Data Tables";
+    ViewBag.Description = "data tables";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header ">
+                <span class="widget-caption">Lista de empresas</span>
+                <div class="widget-buttons">
+                    <a href="#" data-toggle="maximize">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="#" data-toggle="collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="#" data-toggle="dispose">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="table-toolbar">
+                    <a   data-toggle="modal" data-target="#ModalNuevaEmpresa" class="btn btn-default">
+                        Nueva empresa
+                    </a>
+                </div>
+                <table class="table table-striped table-bordered table-hover" id="ListaDeEmpresas">
+
+                    <thead>
+                        <tr>
+                        
+                            <th>
+                                Rut
+                            </th>
+                            <th>
+                                Razon social
+                            </th>
+                            <th>
+                                Representante legal
+                            </th>
+                            <th>
+                                Comuna
+                            </th>
+                            <th>
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            
+                            <td>
+                                1259810
+                            </td>
+                            <td>
+                                RENATO LAGOS ACEITON
+                            </td>
+                            <td>
+                                RENATO LAGOS ACEITON
+                            </td>
+                            <td >
+                                Los Angeles
+                            </td>
+                            <td >
+                                <a href="#" class="btn btn-info btn-xs edit" data-toggle="modal" data-target="#ModalActualizarEmpresa"><i class="fa fa-edit"></i> Actualizar</a>
+                                <a href="#" class="btn btn-success btn-xs delete"  data-toggle="modal" data-target="#ModalNuevoEstablecimiento"><i class="fa fa-plus"></i> Agregar establecimientos</a>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                          
+                            <td>
+                                1452682
+                            </td>
+                            <td>
+                                ABAD GARCIA Y PONS LTDA.
+                            </td>
+                            <td>
+                                AMPARO GARCIA LAZARO
+                            </td>
+                            <td>
+                                Los Ángeles
+                            </td>
+                            <td >
+                                <a href="#" class="btn btn-info btn-xs edit"data-toggle="modal" data-target="#ModalActualizarEmpresa"><i class="fa fa-edit"></i> Actualizar</a>
+                                <a href="#" class="btn btn-info btn-xs delete" data-toggle="modal" data-target="#largeModal"><i class="fa fa-home"></i> 2 Establecimientos</a>
+                            </td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header ">
+                <span class="widget-caption">Lista de establecimientos</span>
+                <div class="widget-buttons">
+                    <a href="#" data-toggle="maximize">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="#" data-toggle="collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="#" data-toggle="dispose">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <table class="table table-striped table-bordered table-hover" id="ListaDeEstablecimientos">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                ROL
+                            </th>
+                            <th>
+                                Rut
+                            </th>
+                            <th>
+                                Razon social
+                            </th>
+                            <th>
+                                Establecimiento
+                            </th>
+                            <th>
+                                Comuna
+                            </th>
+                            <th>
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                1259810
+                            </td>
+                            <td>
+                                1259810
+                            </td>
+                            <td>
+                                RENATO LAGOS ACEITON
+                            </td>
+                            <td>
+                                RENATO LAGOS ACEITON
+                            </td>
+                            <td>
+                                Los Angeles
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-info btn-xs edit" data-toggle="modal" data-target="#ModalActualizarEmpresa"><i class="fa fa-edit"></i> Actualizar</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                1452682
+                            </td>
+                            <td>
+                                1452682
+                            </td>
+                            <td>
+                                ABAD GARCIA Y PONS LTDA.
+                            </td>
+                            <td>
+                                AMPARO GARCIA LAZARO
+                            </td>
+                            <td>
+                                Los Ángeles
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-info btn-xs edit" data-toggle="modal" data-target="#ModalActualizarEmpresa"><i class="fa fa-edit"></i> Actualizar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Modal listado establecimientos por empresa-->
+@using (var modal = Html.Bootstrap().Begin(new Modal().Id("largeModal").Closeable().Size(BootstrapSizes.Large)))
+{
+    using (var header = modal.BeginHeader())
+    {
+        <h4 class="modal-title" id="myLargeModalLabel">Establecimientos de   ABAD GARCIA Y PONS LTDA. </h4>
+    }
+    using (var body = modal.BeginBody())
+    {
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+
+                    <div class="widget-body">
+
+                        <table class="table table-striped table-hover table-bordered" id="editabledatatable">
+                            <thead>
+                                <tr role="row">
+                                    <th>
+                                        ROL
+                                    </th>
+                                    <th>
+                                        RUT
+                                    </th>
+                                    <th>
+                                        Razon Social
+                                    </th>
+                                    <th>
+                                        Establecimiento
+                                    </th>
+                                    <th>
+                                        Comuna
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td><a href="#">15090</a></td>
+                                    <td>81624000</td>
+                                    <td>ABAD GARCIA Y PONS LTDA.</td>
+                                    <td>IVCM CASA GARCIA</td>
+                                    <td>Los Angeles</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">81624000</a>
+                                    </td>
+                                    <td>
+                                        81624000
+                                    </td>
+                                    <td>
+                                        ABAD GARCIA Y PONS LTDA.
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        Los Angeles
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<!--Modal listado estableciemientos por empresa-->
+
+<!--Modal nuevo establecimiento-->
+@using (var modal = Html.Bootstrap().Begin(new Modal().Id("ModalNuevoEstablecimiento").Closeable().Size(BootstrapSizes.XXXLarge)))
+{
+    using (var header = modal.BeginHeader())
+    {
+        <h4 class="modal-title" id="myLargeModalLabel">Nuevo establecimiento para  ABAD GARCIA Y PONS LTDA. </h4>
+    }
+    using (var body = modal.BeginBody())
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="widget-body">
+                    <div id="registration-form">
+                        <form role="form">
+                            <div class="form-title">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> Empresa</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> Nombre</label>
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label> Rut</label>
+                                        <input type="text" class="form-control" id="passwordInput" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label> Rol</label>
+                                        <input type="text" class="form-control" id="passwordInput" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label> Estado</label>
+                                        <select class="form-control">
+                                            <option value="0" selected></option>
+                                            <option>Activa</option>
+                                            <option>Cerrada</option>
+                                            <option>Inubicable Temporalmente</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-title">
+                                Ubicación
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> Dirección</label>
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Resto dirección</label>
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Número</label>
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label> Tipo de via</label>
+                                        <select class="form-control">
+                                            <option value="0" selected></option>
+                                            <option>Calle </option>
+                                            <option>Camino </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label> Comuna</label>
+                                        <select class="form-control">
+                                            <option value="0" selected></option>
+                                            <option>Comuna </option>
+                                            <option>Comuna 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Telefono 1</label>
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Telefono 2</label>
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Telefono 3</label>
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Correo electronico</label>
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Sitio web</label>
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Casilla</label>
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-title">
+                                Actividad económica
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label> Sección</label>
+                                        <select class="form-control">
+                                            <option value="0" selected></option>
+                                            <option> </option>
+                                            <option>Camino </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label> División</label>
+                                        <select class="form-control">
+                                            <option value="0" selected></option>
+                                            <option> </option>
+                                            <option>Camino </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label> Grupo</label>
+                                        <select class="form-control">
+                                            <option value="0" selected></option>
+                                            <option>Comuna </option>
+                                            <option>Comuna 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label> Clase</label>
+                                        <select class="form-control">
+                                            <option value="0" selected></option>
+                                            <option>Comuna </option>
+                                            <option>Comuna 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-title">
+                                Datos de informante
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Nombre informante</label>
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Telefono informante </label>
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Correo informante</label>
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Cargo informante</label>
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Observacion</label>
+                                        <textarea class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-blue">Almacenar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+}
+
+<!--Fin Modal  nuevo estableciemiento-->
+<!--Modal Actualizar Empresa-->
+@using (var modal = Html.Bootstrap().Begin(new Modal().Id("ModalActualizarEmpresa").Closeable().Size(BootstrapSizes.Normal)))
+{
+    using (var header = modal.BeginHeader())
+    {
+        <h4 class="modal-title" id="myLargeModalLabel">Actualizar empresa ABAD GARCIA Y PONS LTDA. </h4>
+    }
+    using (var body = modal.BeginBody())
+    {
+        <div class="row">
+            <div class="col-xs-12">                                  
+                    <div class="widget-body">
+                        <div id="registration-form">
+                            <form role="form">
+                                <div class="form-title">
+                                    Información de la empresa
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 ">                                     
+                                        <div class="form-group">
+                                            <label> Rut</label>
+                                            <input type="text" class="form-control" id="userameInput" placeholder="rut">
+                                        </div>                                     
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label> Razón social</label>                        
+                                                <input type="text" class="form-control" id="emailInput" placeholder="" value="ABAD GARCIA Y PONS LTDA.">                                                                                    
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label> Representante legal</label>                                            
+                                                <input type="text" class="form-control" id="passwordInput" placeholder="" value="AMPARO GARCIA LAZARO">                                                                                         
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label> Estado</label>
+                                            <select class="form-control">
+                                                <option>Activa</option>
+                                                <option>Cerrada</option>
+                                                <option>Inubicable Temporalmente</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Región</label>
+                                            <select class="form-control">
+                                                <option value="0"></option>
+                                                <option value="15">Región de Arica y Parinacota</option>
+                                                <option value="1">Región de Tarapacá</option>
+                                                <option value="2">Región de Antofagasta</option>
+                                                <option value="3">Región de Atacama</option>
+                                                <option value="4">Región de Coquimbo</option>
+                                                <option value="5">Región de Valparaíso</option>
+                                                <option value="6">Región del Libertador Gral. Bernardo O’Higgins</option>
+                                                <option value="7">Región del Maule</option>
+                                                <option selected="selected" value="8">Región del Biobío</option>
+                                                <option value="9">Región de La Araucanía</option>
+                                                <option value="14">Región de Los Ríos</option>
+                                                <option value="10">Región de Los Lagos</option>
+                                                <option value="11">Región de Aysén del Gral. Carlos Ibáñez del Campo</option>
+                                                <option value="12">Región de Magallanes y de la Antártica Chilena</option>
+                                                <option value="13">Región Metropolitana de Santiago</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Provincia</label>
+                                            <select class="form-control">
+                                                <option>provincia 1</option>
+                                                <option>provincia 2</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label> Comuna</label>
+                                            <select class="form-control">
+                                                <option>Comuna 1</option>
+                                                <option>Comuna 2</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-blue">Almacenar</button>
+                            </form>
+                        </div>
+                    </div>                
+            </div>
+        </div>
+    }
+}
+
+<!--Fin Modal Actualizar Empresa-->
+
+<!--Modal nueva Empresa-->
+@using (var modal = Html.Bootstrap().Begin(new Modal().Id("ModalNuevaEmpresa").Closeable().Size(BootstrapSizes.Normal)))
+{
+    using (var header = modal.BeginHeader())
+    {
+        <h4 class="modal-title" id="myLargeModalLabel">Nueva empresa </h4>
+    }
+    using (var body = modal.BeginBody())
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="widget-body">
+                    <div id="registration-form">
+                        <form role="form">
+                            <div class="form-title">
+                                Información de la empresa
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label> Rut</label>
+                                        <input type="text" class="form-control" id="userameInput" >
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label> Razón social</label>
+                                        <input type="text" class="form-control" id="emailInput" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label> Representante legal</label>
+                                        <input type="text" class="form-control" id="passwordInput" placeholder="" >
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label> Estado</label>
+                                        <select class="form-control">
+                                            <option value="0" selected></option>
+                                            <option>Activa</option>
+                                            <option>Cerrada</option>
+                                            <option>Inubicable Temporalmente</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Región</label>
+                                        <select class="form-control">
+                                            <option value="0" selected></option>
+                                            <option value="15">Región de Arica y Parinacota</option>
+                                            <option value="1">Región de Tarapacá</option>
+                                            <option value="2">Región de Antofagasta</option>
+                                            <option value="3">Región de Atacama</option>
+                                            <option value="4">Región de Coquimbo</option>
+                                            <option value="5">Región de Valparaíso</option>
+                                            <option value="6">Región del Libertador Gral. Bernardo O’Higgins</option>
+                                            <option value="7">Región del Maule</option>
+                                            <option selected="selected" value="8">Región del Biobío</option>
+                                            <option value="9">Región de La Araucanía</option>
+                                            <option value="14">Región de Los Ríos</option>
+                                            <option value="10">Región de Los Lagos</option>
+                                            <option value="11">Región de Aysén del Gral. Carlos Ibáñez del Campo</option>
+                                            <option value="12">Región de Magallanes y de la Antártica Chilena</option>
+                                            <option value="13">Región Metropolitana de Santiago</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Provincia</label>
+                                        <select class="form-control">
+                                            <option value="0" selected></option>
+                                            <option>provincia </option>
+                                            <option>provincia 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label> Comuna</label>
+                                        <select class="form-control">
+                                            <option value="0" selected></option>
+                                            <option>Comuna </option>
+                                            <option>Comuna 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-blue">Almacenar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<!--Fin Modal nueva Empresa-->
+
+@section PageScripts{
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+
+<script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script>
+        InitiateListaDeEmpresas.init();
+        InitiateListaDeEstablecimientos.init();
+    </script>
+}

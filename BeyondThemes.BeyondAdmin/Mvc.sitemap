@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="Gestión" controller="Home" action="Index" imageUrl="glyphicon glyphicon-home" description="Gestión">
+     <mvcSiteMapNode title="Directorio" controller="Home" action="UIElements" imageUrl="fa fa-desktop" description="Directorios">
+      <mvcSiteMapNode title="Empresas" controller="Directorio" action="Empresas" description="Empresas"/>
+        <mvcSiteMapNode title="Actualizar Empresa" controller="Directorio" action="ActualizarEmpresa" description="Actualizar empresa" visibility="SiteMapPathHelper,!*" />
+      <mvcSiteMapNode title="Establecimientos" controller="Directorio" action="Establecimientos" description="Establecimientos"/>
+      </mvcSiteMapNode>
+    <mvcSiteMapNode title="Encuestas" controller="Encuestas" action="Encuestas" imageUrl="fa fa-picture-o" description="Encuestas"/>
+    <mvcSiteMapNode title="Reportes" controller="Home" action="More Pages" imageUrl="glyphicon glyphicon-link" description="Reportes">
+      <mvcSiteMapNode title="De gestión" description=" Reportes de Gestión" url="/1">
+        <mvcSiteMapNode title="Encuestas" imageUrl="fa fa-camera" description="Encuestas" url="/2"/>
+        <mvcSiteMapNode title="Directorios" imageUrl="fa fa-camera" description="Encuestas" url="/3"/>  
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="De sistema" description=" Reportes de Gestión" url="/4">
+        <mvcSiteMapNode title="Errores" imageUrl="fa fa-camera" description="Encuestas" url="/5"/>
+        <mvcSiteMapNode title="Accesos" imageUrl="fa fa-camera" description="Encuestas" url="/6"/>  
+        <mvcSiteMapNode title="Tablas" imageUrl="fa fa-camera" description="Encuestas" url="/7"/> 
+      </mvcSiteMapNode>
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Administración" controller="Home" action="RTL" imageUrl="fa fa-align-right" description="">
+      <mvcSiteMapNode title="Usuarios" controller="Home" action="Arabic" description="Arabic Layout"/>
+      <mvcSiteMapNode title="Roles" controller="Home" action="Persian" description="Persian Layout"/>
+    </mvcSiteMapNode>
+  </mvcSiteMapNode>
+</mvcSiteMap>

@@ -1,0 +1,12 @@
+﻿@using BeyondThemes.BeyondAdmin.Models.Widget
+@model ParcialActividadesViewModel
+@{
+    Layout = null;
+}
+
+<select class="form-control required" name="IdActividad" required>
+    @foreach (Glo_Actividad actividad in Model.actividades)
+    {
+        <option value="@actividad.IdActividad">@actividad.GlosaActividad.ToString()</option>
+    }
+</select>

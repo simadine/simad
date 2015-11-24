@@ -1,0 +1,13 @@
+﻿@using BeyondThemes.BeyondAdmin.Models.Widget
+@model ParcialClasesViewModel
+
+@{
+    Layout = null;
+}
+
+    <select class="form-control" onclick="SelectSubclase(this);" name="IdActividad" data-id="@Model.establecimiento.ToString()">
+        @foreach (Glo_Clase clase  in Model.clases)
+        {
+            <option value="@clase.IdActividad">@clase.GlosaClase.ToString()</option>
+        }
+    </select>

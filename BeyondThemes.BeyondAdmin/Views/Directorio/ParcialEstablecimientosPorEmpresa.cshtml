@@ -1,0 +1,405 @@
+﻿@using BeyondThemes.BeyondAdmin.Models.Directorio
+@model ParcialEstablecimientosPorEmpresaViewModel
+@{ 
+    Layout = null;
+}
+
+
+@if (Model.Establecimientos.Count() > 0)
+{
+
+
+    foreach (DetalleEstablecimiento est in Model.Establecimientos)
+    {
+
+        <div class="row" id="est-@est.establecimiento.RolEstablecimiento.ToString()">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <div class="widget  radius-bordered">
+                            <div class="widget-header ">
+                                <span class="widget-caption">Establecimiento: <strong>@est.empresa.RazonSocial.ToString()</strong> ROL:<strong> @est.establecimiento.RolEstablecimiento.ToString() - @est.establecimiento.DvEstablecimiento.ToString()  </strong></span>
+                                <div class="widget-buttons">
+                                    <a href="#" data-toggle="maximize">
+                                        <i class="fa fa-expand"></i>
+                                    </a>
+                                    <a href="#" data-toggle="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </a>
+                                    <a href="#" data-toggle="dispose">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="widget-body">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="widget-body">
+                                            <div id="registration-form">
+                                                <form id="establecimiento-@est.establecimiento.RolEstablecimiento" class="establecimiento-@est.establecimiento.RolEstablecimiento" method="post"  data-toggle="validator" role="form" novalidate="novalidate">
+                                                    <div class="form-title">
+                                                    </div>
+                                                    @if (est.georeferencia != null)
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col-md-5">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label> Nombre establecimiento</label>
+                                                                        <input type="text" class="form-control required" required name="NombreEstablecimiento" value="@if(est.establecimiento.NombreEstablecimiento != null){Write(@est.establecimiento.NombreEstablecimiento.ToString());}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label> Rut</label>
+                                                                        <input type="text" class="form-control" readonly name="RutEmpresa" value="@est.empresa.RutEmpresa.ToString()">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label> Rol</label>
+                                                                        <input type="text" class="form-control" value="@est.establecimiento.RolEstablecimiento.ToString() -@est.establecimiento.DvEstablecimiento.ToString()" readonly>
+                                                                        <input type="hidden" class="form-control" name="RolEstablecimiento" value="@est.establecimiento.RolEstablecimiento.ToString()">
+                                                                        <input type="hidden" class="form-control" name="DvEstablecimiento" value="@est.establecimiento.DvEstablecimiento.ToString()">
+                                                                    </div>  
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label> Estado</label>
+                                                                        <select class="form-control" name="IdEstado">
+                                                                            @foreach (Glo_Estados estado in Model.estados)
+                                                                            {
+                                                                                <option value="@estado.IdEstado" @if (est.estado.IdEstado == estado.IdEstado) { Write("selected"); }>@estado.GlosaEstado.ToString()</option>
+                                                                            }
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label> Latitud</label>
+                                                                        <input type="text" class="form-control" id="Latitud-@est.establecimiento.RolEstablecimiento" name="Latitud" value="@if (est.georeferencia != null) { Write(est.georeferencia.Latitud.ToString());}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label> Longitud</label>
+                                                                        <input type="text" class="form-control" id="Longitud-@est.establecimiento.RolEstablecimiento" name="Longitud" value="@if (est.georeferencia != null) { Write(est.georeferencia.Longitud.ToString());}">
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                <div id="mapa-@est.establecimiento.RolEstablecimiento" class="mapa" style="min-height:350px; width:100%;" data-id="@est.establecimiento.RolEstablecimiento" data-lat="@if (est.georeferencia != null) { Write(est.georeferencia.Latitud);}" data-lng="@if (est.georeferencia != null) { Write(est.georeferencia.Longitud);}"></div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="row">
+                                                            
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label> Nombre establecimiento</label>
+                                                                    <input type="text" class="form-control required" required name="NombreEstablecimiento" value="@if(est.establecimiento.NombreEstablecimiento != null){Write(@est.establecimiento.NombreEstablecimiento.ToString());}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label> Rut</label>
+                                                                    <input type="text" class="form-control" readonly name="RutEmpresa" value="@est.empresa.RutEmpresa.ToString()">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label> Rol</label>
+                                                                    <input type="text" class="form-control"  value="@est.establecimiento.RolEstablecimiento.ToString() -@est.establecimiento.DvEstablecimiento.ToString()" readonly>
+                                                                    <input type="hidden" class="form-control" name="RolEstablecimiento" value="@est.establecimiento.RolEstablecimiento.ToString()">
+                                                                    <input type="hidden" class="form-control" name="DvEstablecimiento" value="@est.establecimiento.DvEstablecimiento.ToString()">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label> Estado</label>
+                                                                    <select class="form-control" name="IdEstado">
+                                                                        @foreach (Glo_Estados estado in Model.estados)
+                                                                        {
+                                                                            <option value="@estado.IdEstado" @if (est.estado.IdEstado == estado.IdEstado) { Write("selected"); }>@estado.GlosaEstado.ToString()</option>
+                                                                        }
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>  Añadir georeferencia </label>
+                                                                    <a  class="btn btn-success nueva-georreferencia" data-id="@est.establecimiento.RolEstablecimiento.ToString()" data-toggle="modal" data-target="#ModalNuevaGeorrefencia"> <i class="fa fa-plus"></i> Georreferencia</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                  
+                                                    
+                                                    <div class="form-title">
+                                                        Ubicación
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label> Dirección</label>
+                                                                <input type="text" class="form-control" name="DireccionEstablecimiento" value="@if (est.establecimiento.DireccionEstablecimiento != null) { Write(@est.establecimiento.DireccionEstablecimiento.ToString());}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Resto dirección</label>
+                                                                <input type="text" class="form-control" name="RestoDireccion" value="@if (est.establecimiento.RestoDireccion != null) { Write(@est.establecimiento.RestoDireccion.ToString());}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <div class="form-group">
+                                                                <label>Número</label>
+                                                                <input type="text" class="form-control" name="NumeroEstablecimiento"    value="@if(est.establecimiento.NumeroEstablecimiento != null){Write(@est.establecimiento.NumeroEstablecimiento.ToString());}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div class="form-group">
+                                                                <label> Tipo de via</label>
+                                                                <select class="form-control" name="CodTipoVia">
+                                                                    @foreach (Glo_TipoVia tipovia in Model.tipovias)
+                                                                    {
+                                                                        <option value="@tipovia.CodTipoVia" @if (tipovia.CodTipoVia == est.tipovia.CodTipoVia ) { Write("selected"); } >@tipovia.NombreTipoVia.ToString()</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> Provincia</label>
+                                                                <select class="form-control select-provincia" data-id="@est.establecimiento.RolEstablecimiento">
+                                                                    @foreach (Glo_Provincias provincia in Model.provincias)
+                                                                    {
+                                                                        <option value="@provincia.CodProvincia.ToString()" @if (est.comuna.CodProvincia == provincia.CodProvincia) { Write("selected"); }>@provincia.NombreProvincia.ToString()</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> Comuna</label>
+                                                                <div id="comunas-@est.establecimiento.RolEstablecimiento">
+                                                                    <select class="form-control" name="CodComuna">
+                                                                        @foreach (Glo_Comunas comuna in Model.comunas.Where(x => x.CodProvincia == est.comuna.CodProvincia).ToList())
+                                                                        {
+                                                                            <option value="@comuna.CodComuna.ToString()" @if (est.comuna.CodComuna == comuna.CodComuna) { Write("selected"); }>@comuna.NombreComuna.ToString()</option>
+                                                                        }
+
+                                                                    </select>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group col-md-4">
+                                                                <label>Codigo</label>
+                                                                   <input type="text" class="form-control"   name="CodigoArea1" value="@if (est.establecimiento.CodigoArea1 != null) { Write(@est.establecimiento.CodigoArea1.ToString());}">
+                                                            </div>
+                                                            <div class="form-group col-md-8 ">
+                                                                <label> Teléfono</label>
+                                                                <input type="text" class="form-control" name="Telefono1" value="@if (est.establecimiento.Telefono1 != null) { Write(@est.establecimiento.Telefono1.ToString());}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group col-md-4">
+                                                                <label>Codigo</label>
+                                                                <input type="text" class="form-control" name="CodigoArea2" value="@if (est.establecimiento.CodigoArea2 != null) { Write(@est.establecimiento.CodigoArea2.ToString());}">
+                                                            </div>
+                                                            <div class="form-group col-md-8">
+                                                                <label>Telefono 2</label>
+                                                                <input type="text" class="form-control" name="Telefono2" value="@if (est.establecimiento.Telefono2 != null) { Write(@est.establecimiento.Telefono2.ToString());}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group col-md-4">
+                                                                <label>Codigo</label>
+                                                                <input type="text" class="form-control" name="CodigoArea3" value="@if (est.establecimiento.CodigoArea3 != null) { Write(@est.establecimiento.CodigoArea3.ToString());}">
+                                                            </div>
+                                                            <div class="form-group col-md-8">
+                                                                <label>Telefono 3</label>
+                                                                <input type="text" class="form-control" name="Telefono3" value="@if (est.establecimiento.Telefono3 != null) {Write(@est.establecimiento.Telefono3.ToString());}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Correo electronico</label>
+                                                                <input type="text" class="form-control" name="CorreoElectronico" value="@if (est.establecimiento.CorreoElectronico != null) {Write(@est.establecimiento.CorreoElectronico.ToString());}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Sitio web</label>
+                                                                <input type="text" class="form-control" name="SitioWeb" value="@if (est.establecimiento.SitioWeb != null) { Write(@est.establecimiento.SitioWeb.ToString());}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Casilla</label>
+                                                                <input type="text" class="form-control" name="Casilla" value="@if (est.establecimiento.Casilla != null) { Write(@est.establecimiento.Casilla.ToString());}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-title">
+                                                        Actividad económica
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> Sección</label>
+                                                                <select class="form-control" onclick="SelectDivision(this);" data-id="@est.establecimiento.RolEstablecimiento">
+                                                                    @foreach (Glo_Seccion seccion in Model.secciones)
+                                                                    {
+                                                                        <option value="@seccion.IdSeccion" @if (est.detalleActividad.seccion == seccion.IdSeccion) { Write("selected"); }>@seccion.GlosaSeccion.ToString()</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> División</label>
+                                                                <div id="divisiones-@est.establecimiento.RolEstablecimiento">
+                                                                    <select class="form-control" onclick="SelectGrupo(this);" data-id="@est.establecimiento.RolEstablecimiento">
+                                                                        @foreach (Glo_Division division in Model.divisiones.Where(x => x.IdSeccion == est.detalleActividad.seccion).ToList())
+                                                                        {
+                                                                            <option value="@division.IdDivision.ToString()" @if (est.detalleActividad.division == division.IdDivision) { Write("selected"); }>@division.GlosaDivision.ToString()</option>
+                                                                        }
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> Grupo</label>
+                                                                <div id="grupos-@est.establecimiento.RolEstablecimiento">
+                                                                    <select class="form-control" onclick="SelectClase(this);" data-id="@est.establecimiento.RolEstablecimiento">
+                                                                        @foreach (Glo_Grupo grupo in Model.grupos.Where(x => x.IdDivision == est.detalleActividad.division).ToList())
+                                                                        {
+                                                                            <option value="@grupo.IdGrupo.ToString()" @if (est.detalleActividad.grupo == grupo.IdGrupo) { Write("selected"); }>@grupo.GlosaGrupo.ToString()</option>
+                                                                        }
+                                                                    </select>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> Clase</label>
+                                                                <div id="clases-@est.establecimiento.RolEstablecimiento">
+                                                                    <select class="form-control" name="IdActividad" onclick="SelectSubclase(this);" data-id="@est.establecimiento.RolEstablecimiento">
+                                                                        @foreach (Glo_Clase clase in Model.clases.Where(x => x.IdGrupo == est.detalleActividad.grupo).ToList())
+                                                                        {
+                                                                            <option value="@clase.IdActividad.ToString()" @if (est.detalleActividad.clase == clase.IdActividad) { Write("selected"); }>@clase.GlosaClase.ToString()</option>
+                                                                        }
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                       
+                                                      
+                                                    </div>
+                                                        <div class="form-title">
+                                                            Datos de informante
+                                                        </div>
+
+                                                    @if (est.informante != null)
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Nombre informante</label>
+                                                                    <input type="text" class="form-control" name="NombreInformante" value="@if (est.informante != null) {if (est.informante.NombreInformante != null) { Write(est.informante.NombreInformante.ToString());}}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Telefono informante </label>
+                                                                    <input type="text" class="form-control" name="FonoInformante" value="@if (est.informante != null) { if (est.informante.FonoInformante != null) { Write(est.informante.FonoInformante.ToString());}}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Correo informante</label>
+                                                                    <input type="text" class="form-control" name="CorreoInformante" value="@if (est.informante != null) {if (est.informante.CorreoInformante != null) { Write(est.informante.CorreoInformante.ToString());}}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Cargo informante</label>
+                                                                    <input type="text" class="form-control" name="CargoInformante" value="@if (est.informante != null) {if (est.informante.CargoInformante != null) { Write(est.informante.CargoInformante.ToString());}}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                       <div class="row">
+                                                           <div class="col-md-12">
+                                                               <div class="alert alert-info fade in">
+                                                                   <i class="fa-fw fa fa-info"></i>
+                                                                   <strong>Info</strong> El establecimiento no posee informante asociados. Haga click <a class="nuevo-informante" data-id="@est.establecimiento.RolEstablecimiento.ToString()" data-toggle="modal" data-target="#ModalNuevoInformante">aquí</a> para añadir un informante.
+                                                               </div>
+
+                                                           </div>
+                                                       </div>
+                                                    }
+                                                        
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Observacion</label>
+                                                                    <textarea class="form-control" name="Observacion">@if (est.establecimiento.Observacion != null) { Write(@est.establecimiento.Observacion.ToString());}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <button type="submit"   class="btn btn-blue">Almacenar</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+
+
+}
+else
+{
+    <div class="alert alert-info fade in">
+        <i class="fa-fw fa fa-info"></i>
+        <strong>Info</strong> La empresa no posee establecimientos asociados.
+    </div>
+
+}
+
+
+

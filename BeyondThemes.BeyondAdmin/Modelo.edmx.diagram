@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="72d39647006f4bfc9875164978fd22e0" Name="Diagram1" ZoomLevel="52">
+        <EntityTypeShape EntityType="ModeloSimad.C__MigrationHistory" Width="1.5" PointX="3.75" PointY="2" />
+        <EntityTypeShape EntityType="ModeloSimad.AspNetRoles" Width="1.5" PointX="10.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ModeloSimad.AspNetUserClaims" Width="1.5" PointX="15.25" PointY="4.875" />
+        <EntityTypeShape EntityType="ModeloSimad.AspNetUserLogins" Width="1.5" PointX="15.25" PointY="2.375" />
+        <EntityTypeShape EntityType="ModeloSimad.AspNetUsers" Width="1.5" PointX="13" PointY="2.625" />
+        <EntityTypeShape EntityType="ModeloSimad.Dir_Empresas" Width="1.5" PointX="3" PointY="9.125" />
+        <EntityTypeShape EntityType="ModeloSimad.Dir_Establecimientos" Width="1.5" PointX="5.25" PointY="7" />
+        <EntityTypeShape EntityType="ModeloSimad.Dir_EstablecimientosTemporales" Width="1.5" PointX="8.25" PointY="7.125" />
+        <EntityTypeShape EntityType="ModeloSimad.Ges_EncuestaAE" Width="1.5" PointX="10.5" PointY="21.75" />
+        <EntityTypeShape EntityType="ModeloSimad.Ges_Encuestas" Width="1.5" PointX="8.25" PointY="20.125" />
+        <EntityTypeShape EntityType="ModeloSimad.Ges_Georreferencia" Width="1.5" PointX="7.5" PointY="4.125" />
+        <EntityTypeShape EntityType="ModeloSimad.Ges_Informante" Width="1.5" PointX="7.5" PointY="14.75" />
+        <EntityTypeShape EntityType="ModeloSimad.Ges_Muestra" Width="1.5" PointX="10.5" PointY="9.5" />
+        <EntityTypeShape EntityType="ModeloSimad.Ges_Usuario" Width="1.5" PointX="10.75" PointY="17.625" />
+        <EntityTypeShape EntityType="ModeloSimad.Glo_Clase" Width="1.5" PointX="3" PointY="13.25" />
+        <EntityTypeShape EntityType="ModeloSimad.Glo_Comunas" Width="1.5" PointX="0.75" PointY="6.375" />
+        <EntityTypeShape EntityType="ModeloSimad.Glo_Division" Width="1.5" PointX="1.5" PointY="16.25" />
+        <EntityTypeShape EntityType="ModeloSimad.Glo_EstadoEncuesta" Width="1.5" PointX="6" PointY="19.375" />
+        <EntityTypeShape EntityType="ModeloSimad.Glo_Estados" Width="1.5" PointX="0.75" PointY="9.5" />
+        <EntityTypeShape EntityType="ModeloSimad.Glo_Grupo" Width="1.5" PointX="0.75" PointY="13.25" />
+        <EntityTypeShape EntityType="ModeloSimad.Glo_Provincias" Width="1.5" PointX="1.5" PointY="3.5" />
+        <EntityTypeShape EntityType="ModeloSimad.Glo_Region" Width="1.5" PointX="1.5" PointY="0.75" />
+        <EntityTypeShape EntityType="ModeloSimad.Glo_Seccion" Width="1.5" PointX="1.5" PointY="19.5" />
+        <EntityTypeShape EntityType="ModeloSimad.Glo_TipoEncuesta" Width="1.5" PointX="6" PointY="21.75" />
+        <EntityTypeShape EntityType="ModeloSimad.Glo_TipoVia" Width="1.5" PointX="3" PointY="23" />
+        <EntityTypeShape EntityType="ModeloSimad.Log_Acceso" Width="1.5" PointX="13" PointY="14.875" />
+        <EntityTypeShape EntityType="ModeloSimad.Log_Error" Width="1.5" PointX="13" PointY="17.75" />
+        <EntityTypeShape EntityType="ModeloSimad.Log_Evento" Width="1.5" PointX="13" PointY="23.375" />
+        <EntityTypeShape EntityType="ModeloSimad.Sys_Menu" Width="1.5" PointX="11.5" PointY="27.375" />
+        <EntityTypeShape EntityType="ModeloSimad.Sys_Paginas" Width="1.5" PointX="13.75" PointY="26.875" />
+        <EntityTypeShape EntityType="ModeloSimad.Sys_Roles" Width="1.5" PointX="16" PointY="18.375" />
+        <AssociationConnector Association="ModeloSimad.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="ModeloSimad.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="ModeloSimad.FK_DIR_EMPR_RELATIONS_GLO_COMU" />
+        <AssociationConnector Association="ModeloSimad.FK_DIR_EMPR_RELATIONS_GLO_ESTA" />
+        <AssociationConnector Association="ModeloSimad.FK_DIR_ESTA_RELATIONS_DIR_EMPR" />
+        <AssociationConnector Association="ModeloSimad.FK_DIR_ESTATEMP_RELATIONS_DIR_EMPR" />
+        <AssociationConnector Association="ModeloSimad.FK_DIR_ESTA_RELATIONS_GLO_CLASE" />
+        <AssociationConnector Association="ModeloSimad.FK_DIR_ESTA_RELATIONS_GLO_COMU" />
+        <AssociationConnector Association="ModeloSimad.FK_DIR_ESTA_RELATIONS_GLO_ESTA" />
+        <AssociationConnector Association="ModeloSimad.FK_DIR_ESTA_RELATIONS_GLO_TIPO" />
+        <AssociationConnector Association="ModeloSimad.FK_GES_GEOR_INHERITAN_DIR_ESTA" />
+        <AssociationConnector Association="ModeloSimad.FK_GES_INFO_INHERITAN_DIR_ESTA" />
+        <AssociationConnector Association="ModeloSimad.FK_GES_MUES_GES_MUEST_DIR_ESTA" />
+        <AssociationConnector Association="ModeloSimad.FK_DIR_ESTATEMP_RELATIONS_GLO_COMU" />
+        <AssociationConnector Association="ModeloSimad.FK_DIR_ESTATEMP_RELATIONS_GLO_ESTA" />
+        <AssociationConnector Association="ModeloSimad.FK_DIR_ESTATEMP_RELATIONS_GLO_TIPO" />
+        <AssociationConnector Association="ModeloSimad.FK_GES_ENCU_GES_ENCUE_GES_ENCU" />
+        <AssociationConnector Association="ModeloSimad.FK_GES_ENCU_RELATIONS_GLO_ESTA" />
+        <AssociationConnector Association="ModeloSimad.FK_GES_ENCU_RELATIONS_GLO_TIPO" />
+        <AssociationConnector Association="ModeloSimad.FK_GES_MUES_GES_MUEST_GES_ENCU" />
+        <AssociationConnector Association="ModeloSimad.FK_LOG_ACCE_RELATIONS_GES_USUA" />
+        <AssociationConnector Association="ModeloSimad.FK_LOG_ERRO_RELATIONS_GES_USUA" />
+        <AssociationConnector Association="ModeloSimad.FK_LOG_EVEN_RELATIONS_GES_USUA" />
+        <AssociationConnector Association="ModeloSimad.FK_GLO_CLAS_RELATIONS_GLO_GRUP" />
+        <AssociationConnector Association="ModeloSimad.FK_GLO_COMU_RELATIONS_GLO_PROV" />
+        <AssociationConnector Association="ModeloSimad.FK_GLO_DIVI_RELATIONS_GLO_SECC" />
+        <AssociationConnector Association="ModeloSimad.FK_GLO_GRUP_RELATIONS_GLO_DIVI" />
+        <AssociationConnector Association="ModeloSimad.FK_GLO_PROV_RELATIONS_GLO_REGI" />
+        <AssociationConnector Association="ModeloSimad.FK_SYS_PAGI_RELATIONS_SYS_MENU" />
+        <AssociationConnector Association="ModeloSimad.AspNetUserRoles" />
+        <AssociationConnector Association="ModeloSimad.Sys_PaginasRoles" />
+        <AssociationConnector Association="ModeloSimad.Sys_UsuariosEnRoles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
